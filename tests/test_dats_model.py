@@ -7,7 +7,7 @@ from dats import dats_model
 class DatasetValidation(TestCase):
 
     def setUp(self):
-        self.path = os.path.join(os.path.dirname(__file__), "../json-instances")
+        self.path = os.path.join(os.path.dirname(__file__), ".." + os.sep  + "json-instances")
 
     def tearDown(self):
         pass
@@ -19,5 +19,5 @@ class DatasetValidation(TestCase):
         self.assertTrue(dats_model.validate_dats_contexts())
 
     def test_validate_dataset(self):
-        self.assertTrue(dats_model.validate_dataset(self.path, "<your filename>", 0))
+        self.assertTrue(dats_model.validate_dataset(self.path, "AG.20927009.json", 0))
 

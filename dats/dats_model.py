@@ -9,14 +9,14 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DATS_schemasPath = os.path.join(os.path.dirname(__file__), "../json-schemas")
-DATS_contextsPath = os.path.join(os.path.dirname(__file__), "../json-schemas/contexts")
+DATS_schemasPath = os.path.join(os.path.dirname(__file__), ".." + os.sep  + "json-schemas")
+DATS_contextsPath = os.path.join(os.path.dirname(__file__), ".." + os.sep  + "json-schemas" + os.sep  + "contexts")
 
 def validate_dataset(path, filename, error_printing):
     try:
         dataset_schema_file = open(join(DATS_schemasPath,"dataset_schema.json"))
         datasetSchema = json.load(dataset_schema_file)
-        resolver = RefResolver('file://'+DATS_schemasPath+'/'+"dataset_schema.json", datasetSchema) #, base_uri=schemasPath)
+        resolver = RefResolver('file://'+DATS_schemasPath+ os.sep  + "dataset_schema.json", datasetSchema) #, base_uri=schemasPath)
         validator = Draft4Validator(datasetSchema, resolver=resolver)
         logger.info("Validating %s", filename)
 
