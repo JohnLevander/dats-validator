@@ -16,7 +16,7 @@ def validate_dataset(path, filename, error_printing):
     try:
         dataset_schema_file = open(join(DATS_schemasPath,"dataset_schema.json"))
         datasetSchema = json.load(dataset_schema_file)
-        resolver = RefResolver('file://'+DATS_schemasPath+ os.sep  + "dataset_schema.json", datasetSchema) #, base_uri=schemasPath)
+        resolver = RefResolver('file://'+DATS_schemasPath + "/" + "dataset_schema.json", datasetSchema) #, base_uri=schemasPath)
         validator = Draft4Validator(datasetSchema, resolver=resolver)
         logger.info("Validating %s", filename)
 
