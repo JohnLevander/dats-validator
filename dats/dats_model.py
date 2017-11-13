@@ -1,24 +1,26 @@
 __author__ = 'agbeltran'
 
-import json, os, sys
+import pathlib
+import json, sys
 from jsonschema import RefResolver, Draft4Validator
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile, join, dirname
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DATS_schemasPath = os.path.join(os.path.dirname(__file__), ".." + os.sep  + "json-schemas")
-DATS_contextsPath = os.path.join(os.path.dirname(__file__), ".." + os.sep  + "json-schemas" + os.sep  + "contexts")
+DATS_schemasPath = join(dirname(__file__), "..", "json-schemas")
+DATS_contextsPath = join(dirname(__file__), "..", "json-schemas", "contexts")
+
 
 def validate_dataset(path, filename, error_printing):
     try:
-        dataset_schema_file = open(join(DATS_schemasPath,"dataset_schema.json"))
+        dataset_schema_path = join(DATS_schemasPath, "dataset_schema.json")
+        dataset_schema_file = open(dataset_schema_path)
         datasetSchema = json.load(dataset_schema_file)
-        url = DATS_schemasPath + "/" + "dataset_schema.json"
-        #url = url.replace("/", "\\\\")
-        resolver = RefResolver('file://' + url, datasetSchema) #, base_uri=schemasPath)
+        uri = pathlib.Path(dataset_schema_path).as_uri()
+        resolver = RefResolver(uri, datasetSchema)
         validator = Draft4Validator(datasetSchema, resolver=resolver)
         logger.info("Validating %s", filename)
 
